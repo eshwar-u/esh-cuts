@@ -1,0 +1,10 @@
+{
+  "appointments": [
+    {
+      "name": "Umarengan",
+      "time": "10:00",
+      "day": "2023-12-20",
+      "email": "umarenganrd@gmail.com"
+    }
+  ]
+}
