@@ -8,12 +8,7 @@ function App() {
 
   return (
     <>
-      <Navbar
-        button1="About me"
-        button2="Book Appointment"
-        button3="Contact Me"
-        setContent={setContent}
-      />
+      <Navbar setContent={setContent} />
       <Contents content={content} />
     </>
   );

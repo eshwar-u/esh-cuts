@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 
 function BookContent() {
-  const [content, setContent] = useState("haircutType");
+  const [content] = useState("haircutType");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [availDates, setAvailDates] = useState([]);
-  const [isImported, setIsImported] = useState(false);
+  //const [availDates, setAvailDates] = useState([]);
+  //const [isImported, setIsImported] = useState(false);
 
   const handleClick = () => {
     console.log("email:", email);
     console.log("name:", name);
+    console.log("date:", date);
+    console.log("time:", time);
     // You can log any data or message you want here
     //check for user account, if not create one
     //change the date that needs to be changed

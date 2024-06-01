@@ -1,18 +1,15 @@
-import { SetStateAction, useState } from "react";
-import Contents from "./Contents";
+//import { SetStateAction, useState } from "react";
+//import Contents from "./Contents";
 import "./Navbar.css";
-import PricesContent from "./PricesContent";
-import AboutContent from "./AboutContent";
-import BookContent from "./BookContent";
+//import PricesContent from "./PricesContent";
+//import AboutContent from "./AboutContent";
+//import BookContent from "./BookContent";
 
 interface Props {
-  button1: string;
-  button2: string;
-  button3: string;
   setContent: Function;
 }
 
-function Navbar({ button1, button2, button3, setContent }: Props) {
+function Navbar({ setContent }: Props) {
   //type ContentType = "Prices/Location" | "Book Haircut" | "Log in" | null;
 
   const handleClick = (content: string) => {

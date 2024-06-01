@@ -5,7 +5,7 @@
 
 import BookContent from "./BookContent";
 import PricesContent from "./PricesContent";
-import { useState } from "react";
+//import { useState } from "react";
 import "./Contents.css";
 
 interface Props {
