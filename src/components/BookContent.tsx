@@ -22,9 +22,7 @@ function BookContent() {
   useEffect(() => {
     const apiCall = async () => {
       console.log("in the apiCall method");
-      const result = await fetch(
-        "https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_id=1"
-      );
+      const result = await fetch("/test/appointments?appt_id=1");
       console.log("the result is:" + result);
     };
     apiCall();
