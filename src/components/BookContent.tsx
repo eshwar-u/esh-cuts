@@ -29,7 +29,7 @@ function BookContent() {
           mode: "cors",
           headers: {
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Credentials": "false",
             "Content-Type": "application/json",
           },
         }
