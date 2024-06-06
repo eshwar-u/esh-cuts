@@ -30,6 +30,7 @@ function BookContent() {
           headers: {
             "Access-Control-Allow-Origin":
               "https://main.d3ldz2m7vyu821.amplifyapp.com",
+            "Access-Control-Allow-Credentials": "true",
             "Content-Type": "application/json",
           },
         }
