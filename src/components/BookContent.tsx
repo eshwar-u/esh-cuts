@@ -28,6 +28,8 @@ function BookContent() {
           method: "GET",
           mode: "cors",
           headers: {
+            "Access-Control-Allow-Origin":
+              "https://main.d3ldz2m7vyu821.amplifyapp.com",
             "Content-Type": "application/json",
           },
         }
