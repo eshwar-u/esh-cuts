@@ -23,7 +23,14 @@ function BookContent() {
     const apiCall = async () => {
       console.log("in the apiCall method");
       const result = await fetch(
-        "https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_id=1"
+        "https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_id=1",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("the result is:" + result);
     };
