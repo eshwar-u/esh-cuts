@@ -34,7 +34,7 @@ function BookContent() {
           },
         }
       );
-      console.log("the result is:" + result);
+      console.log("the result is:" + result.type);
     };
     apiCall();
   }, []);
