@@ -68,7 +68,7 @@ function BookContent() {
       }
     };
 
-    apiCall();
+    loopDates();
   }, []);
 
   if (content == "haircutType") {
