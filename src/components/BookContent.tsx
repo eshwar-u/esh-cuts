@@ -21,7 +21,9 @@ function BookContent() {
 
   useEffect(() => {
     const apiCall = async (date: string) => {
-      console.log(`in the apiCall method, date is ${date}`);
+      console.log(
+        `in the apiCall method, api call is is https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_date=${date}`
+      );
       const result = await fetch(
         `https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_date=${date}`,
         {
