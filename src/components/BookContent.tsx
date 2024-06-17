@@ -20,10 +20,10 @@ function BookContent() {
   };
 
   useEffect(() => {
-    const apiCall = async () => {
+    const apiCall = async (date: string) => {
       console.log("in the apiCall method");
       const result = await fetch(
-        "https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_id=1",
+        `https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_date=${date}`,
         {
           method: "GET",
           mode: "cors",
@@ -36,6 +36,38 @@ function BookContent() {
       );
       console.log("the result is:" + result.body);
     };
+
+    const startHour = 10; // 10 am
+    const endHour = 19; // 7 pm
+    const twoWeeksFromNow = new Date();
+    twoWeeksFromNow.setDate(twoWeeksFromNow.getDate() + 14);
+
+    const formatDate = (date: Date) => {
+      const YYYY = date.getFullYear();
+      const MM = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+      const DD = String(date.getDate()).padStart(2, "0");
+      const hh = String(date.getHours()).padStart(2, "0");
+      const mm = String(date.getMinutes()).padStart(2, "0");
+      const ss = String(date.getSeconds()).padStart(2, "0");
+      return `${YYYY}${MM}${DD}${hh}${mm}${ss}`;
+    };
+
+    const loopDates = () => {
+      let currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 1); // Start with the next day
+      currentDate.setHours(startHour, 0, 0, 0); // Set to 10 am
+
+      while (currentDate <= twoWeeksFromNow) {
+        for (let hour = startHour; hour <= endHour; hour++) {
+          currentDate.setHours(hour);
+          const formattedDate = formatDate(currentDate);
+          apiCall(formattedDate);
+        }
+        currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+        currentDate.setHours(startHour, 0, 0, 0); // Reset to 10 am
+      }
+    };
+
     apiCall();
   }, []);
 
