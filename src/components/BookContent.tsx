@@ -6,24 +6,108 @@ function BookContent() {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  //const [availDates, setAvailDates] = useState([]);
+  const [availDates, setAvailDates] = useState<any[]>([]);
   //const [isImported, setIsImported] = useState(false);
 
-  const handleClick = () => {
+  const createUser = async (name: string, email: string) => {
+    var first_and_last = name.split(" ");
+    const result = await fetch(
+      `https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/users`,
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "false",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_email: email,
+          user_firstname: first_and_last[0],
+          user_lastname: first_and_last[1],
+        }),
+      }
+    );
+    var jsonParsedContents = await result.json();
+    return jsonParsedContents.body;
+  };
+
+  const getUser = async (name: string, email: string) => {
+    var first_and_last = name.split(" ");
+    const result = await fetch(
+      `https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/users?user_email=${email}&user_firstname=${first_and_last[0]}&user_lastname=${first_and_last[1]}`,
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "false",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    var jsonParsedContents = await result.json();
+    return jsonParsedContents.body;
+  };
+
+  const createAppointment = async (
+    user_id: string,
+    date: string,
+    time: string
+  ) => {
+    const result = await fetch(
+      `https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments`,
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "false",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          appointment_date: date,
+          appointment_time: time,
+        }),
+      }
+    );
+    var jsonParsedContents = await result.json();
+    return jsonParsedContents.body;
+  };
+
+  const handleClick = async () => {
     console.log("email:", email);
     console.log("name:", name);
     console.log("date:", date);
     console.log("time:", time);
-    // You can log any data or message you want here
-    //check for user account, if not create one
-    //change the date that needs to be changed
+
+    try {
+      let user = await getUser(name, email);
+      if (!user) {
+        await createUser(name, email);
+        user = await getUser(name, email);
+      }
+
+      if (user) {
+        const user_id = user.user_id;
+        await createAppointment(user_id, date, time);
+        console.log("Appointment created successfully");
+
+        console.log(availDates);
+
+        // Remove the appointment from visibility
+        // You can implement this part as per your UI framework/library
+      } else {
+        console.log("Error: User could not be found or created");
+      }
+    } catch (error) {
+      console.error("Error handling click:", error);
+    }
   };
 
   useEffect(() => {
     const apiCall = async (date: string) => {
-      //console.log(
-      //`in the apiCall method, api call is is https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_date=20240618100000`
-      //);
       const result = await fetch(
         `https://iwxclylnoe.execute-api.us-east-2.amazonaws.com/test/appointments?appt_date=${date}`,
         {
@@ -36,7 +120,12 @@ function BookContent() {
           },
         }
       );
-      console.log("the result is:" + result.body);
+      var jsonParsedContents = await result.json();
+      console.log("the result is:" + jsonParsedContents.body);
+      //fix this, store all the dates in a state object
+      if (jsonParsedContents.user_id == null) {
+        setAvailDates((prevDates) => [...prevDates, jsonParsedContents]);
+      }
     };
 
     const startHour = 10; // 10 am
@@ -72,6 +161,8 @@ function BookContent() {
 
     loopDates();
   }, []);
+
+  //CHANGE THIS STUFF AND MAKE THE UI LOOK BETTER
 
   if (content == "haircutType") {
     return (
@@ -116,14 +207,5 @@ function BookContent() {
     </>
   );
 }
-/*
-<ul className="list-group">
-        <li className="list-group-item">An item</li>
-        <li className="list-group-item">A second item</li>
-        <li className="list-group-item">A third item</li>
-        <li className="list-group-item">A fourth item</li>
-        <li className="list-group-item">And a fifth one</li>
-      </ul>
-*/
 
 export default BookContent;
