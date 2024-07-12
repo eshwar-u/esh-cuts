@@ -64,6 +64,7 @@ function BookContent() {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": "false",
           "Content-Type": "application/json",
+          "User-Agent": "insomnia/8.6.0",
         },
         body: JSON.stringify({
           user_id: user_id,
@@ -117,6 +118,7 @@ function BookContent() {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": "false",
             "Content-Type": "application/json",
+            "User-Agent": "insomnia/8.6.0",
           },
         }
       );
@@ -158,7 +160,6 @@ function BookContent() {
         currentDate.setHours(startHour, 0, 0, 0); // Reset to 10 am
       }
     };
-
     loopDates();
   }, []);
 
